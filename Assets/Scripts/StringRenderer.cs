@@ -2,7 +2,8 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(LineRenderer))]
-public class StringRenderer : MonoBehaviour {
+public class StringRenderer : MonoBehaviour
+{
     [Header("Settings")]
     public Gradient pullColor = null;
 
@@ -16,37 +17,49 @@ public class StringRenderer : MonoBehaviour {
 
     private LineRenderer lineRenderer = null;
 
-    private void Awake() {
+    private void Awake()
+    {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    private void Update() {
-        // While in editor, make sure the line renderer follows bow
+    private void Update()
+    {
+        // Mientras estás en el editor,
+        // asegúrate de que el LineRenderer siga el arco
+
         //if (Application.isEditor && !Application.isPlaying)
-            UpdatePositions();
+        UpdatePositions();
     }
 
-    private void OnEnable() {
-        // Update before render gives better results
+    private void OnEnable()
+    {
+        // Actualizar antes de renderizar da mejores resultados
         Application.onBeforeRender += UpdatePositions;
 
-        // When being pulled, update the color
+        // Al ser tirado, actualiza el color
         pullMeasurer.Pulled.AddListener(UpdateColor);
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         Application.onBeforeRender -= UpdatePositions;
         pullMeasurer.Pulled.RemoveListener(UpdateColor);
     }
 
-    private void UpdatePositions() {
-        // Set positions of line renderer, middle position is the notch attach transform
-        Vector3[] positions = new Vector3[] { start.position, middle.position, end.position };
+    private void UpdatePositions()
+    {
+        // Establece las posiciones del LineRenderer
+        // La middle.position es la unión del Notch
+        Vector3[] positions = new Vector3[] {
+            start.position, middle.position, end.position
+        };
+
         lineRenderer.SetPositions(positions);
     }
 
-    private void UpdateColor(Vector3 pullPosition, float pullAmount) {
-        // Using the gradient, show pull value via the string color
+    private void UpdateColor(Vector3 pullPosition, float pullAmount)
+    {
+        // Usando el degradado, muestra el valor vía string color
         Color color = pullColor.Evaluate(pullAmount);
         lineRenderer.material.color = color;
     }
