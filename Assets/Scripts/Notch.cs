@@ -53,8 +53,9 @@ public class Notch : XRSocketInteractor
     public void SetReady(BaseInteractionEventArgs args)
     {
         // Set the notch ready if bow is selected
-        Debug.Log("Notch.SetReady " + args.interactable.isSelected);
         IsReady = args.interactable.isSelected;
+
+        Debug.Log("Notch.SetReady " + IsReady);
     }
 
     public override bool CanSelect(XRBaseInteractable interactable)
