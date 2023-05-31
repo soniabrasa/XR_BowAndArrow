@@ -24,19 +24,17 @@ public class StringRenderer : MonoBehaviour
 
     private void Update()
     {
-        // Mientras estás en el editor,
-        // asegúrate de que el LineRenderer siga el arco
-
+        // While in editor, make sure the line renderer follows bow
         //if (Application.isEditor && !Application.isPlaying)
         UpdatePositions();
     }
 
     private void OnEnable()
     {
-        // Actualizar antes de renderizar da mejores resultados
+        // Update before render gives better results
         Application.onBeforeRender += UpdatePositions;
 
-        // Al ser tirado, actualiza el color
+        // When being pulled, update the color
         pullMeasurer.Pulled.AddListener(UpdateColor);
     }
 
@@ -48,18 +46,14 @@ public class StringRenderer : MonoBehaviour
 
     private void UpdatePositions()
     {
-        // Establece las posiciones del LineRenderer
-        // La middle.position es la unión del Notch
-        Vector3[] positions = new Vector3[] {
-            start.position, middle.position, end.position
-        };
-
+        // Set positions of line renderer, middle position is the notch attach transform
+        Vector3[] positions = new Vector3[] { start.position, middle.position, end.position };
         lineRenderer.SetPositions(positions);
     }
 
     private void UpdateColor(Vector3 pullPosition, float pullAmount)
     {
-        // Usando el degradado, muestra el valor vía string color
+        // Using the gradient, show pull value via the string color
         Color color = pullColor.Evaluate(pullAmount);
         lineRenderer.material.color = color;
     }
