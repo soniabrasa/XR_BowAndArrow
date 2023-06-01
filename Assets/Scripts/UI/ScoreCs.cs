@@ -24,6 +24,16 @@ public class ScoreCs : MonoBehaviour
         valueTotalPoints.text = num.ToString();
     }
 
+    public void ButtonInitializeOnClick()
+    {
+        GameManager.instance.IntializeGame();
+    }
+
+    public void ButtonRetrieveBowOnClick()
+    {
+        GameManager.instance.RetrieveBow();
+    }
+
 
     void Start()
     {
