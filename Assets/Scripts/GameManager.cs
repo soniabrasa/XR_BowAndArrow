@@ -5,12 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Bow bow;
-    // public Marcador marcador;
-    public static GameManager instance;
-    private int playerScore;
-    private int launchedArrowCount;
+    public ScoreCs scoreCs;
+    private int totalPoints;
+    private int totalArrows;
 
     private List<GameObject> objectsInGame = new List<GameObject>();
+
+    public static GameManager instance;
 
     void Awake()
     {
@@ -22,10 +23,29 @@ public class GameManager : MonoBehaviour
         IntializeGame();
     }
 
+    public void IntializeGame()
+    {
+        totalPoints = 0;
+        totalArrows = 0;
+        foreach (GameObject go in objectsInGame)
+        {
+            Destroy(go);
+        }
+
+        // Clear()es la forma canónica de borrar un archivo List<T>
+        objectsInGame.Clear();
+
+        // Initialize Score UGUI
+
+        scoreCs.SetTotalArrows(totalArrows);
+        scoreCs.SetTotalArrows(totalArrows);
+        scoreCs.SetTotalPoints(totalPoints);
+    }
+
 
     public bool IsGameActive()
     {
-        return launchedArrowCount < 10;
+        return totalArrows < 10;
     }
 
     public void RegisterMarker(GameObject marker)
@@ -42,37 +62,26 @@ public class GameManager : MonoBehaviour
     {
         if (!IsGameActive()) { return; }
 
-        launchedArrowCount++;
-        Debug.Log("ArrowsLaunched " + launchedArrowCount);
-        // marcador.SetNumeroFrechas(launchedArrowCount);
+        totalArrows++;
+
+        scoreCs.SetTotalArrows(totalArrows);
+
+        Debug.Log("ArrowsLaunched " + totalArrows);
     }
 
     public void AddPoints(int points)
     {
         if (!IsGameActive()) { return; }
 
-        playerScore += points;
-        Debug.Log("PlayerScore " + playerScore);
-        // marcador.SetPuntuacionTotal(playerScore);
-        // marcador.SetPuntuacionUltimaFrecha(points);
+        totalPoints += points;
+
+        scoreCs.SetLastArrowPoints(points);
+        scoreCs.SetTotalPoints(totalPoints);
+
+        Debug.Log("totalPoints " + totalPoints);
     }
 
-    public void IntializeGame()
-    {
-        playerScore = 0;
-        launchedArrowCount = 0;
-        foreach (GameObject go in objectsInGame)
-        {
-            Destroy(go);
-        }
-        objectsInGame.Clear();
-
-        // marcador.SetNumeroFrechas(0);
-        // marcador.SetPuntuacionTotal(0);
-        // marcador.SetPuntuacionUltimaFrecha(0);
-    }
-
-
+    // UI Button recuperar arco
     public void RetrieveBow()
     {
         bow.ResetPosition();
