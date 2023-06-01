@@ -21,11 +21,14 @@ public class Quiver : XRBaseInteractable
 
     public void CreateAndSelectArrow(SelectEnterEventArgs args)
     {
-        Debug.Log("Quiver.CreateAndSelectArrow");
+        if (!GameManager.instance.IsGameActive()) { return; }
 
+        Debug.Log("Quiver.CreateAndSelectArrow");
         // Create arrow, force into interacting hand
         Arrow arrow = CreateArrow(args.interactableObject.transform);
         interactionManager.SelectEnter(args.interactorObject, arrow);
+
+        GameManager.instance.RegisterArrow(arrow.gameObject);
     }
 
     private Arrow CreateArrow(Transform orientation)
@@ -34,4 +37,5 @@ public class Quiver : XRBaseInteractable
         GameObject arrowObject = Instantiate(arrowPrefab, orientation.position, orientation.rotation);
         return arrowObject.GetComponent<Arrow>();
     }
+
 }

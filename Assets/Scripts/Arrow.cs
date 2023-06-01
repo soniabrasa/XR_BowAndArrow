@@ -62,7 +62,7 @@ public class Arrow : XRGrabInteractable
             SetLaunch(true);
             UpdateLastPosition();
             ApplyForce(notch.PullMeasurer);
-            // GameManager.instance.LaunchedArrow();
+            GameManager.instance.LaunchedArrow();
         }
     }
 
