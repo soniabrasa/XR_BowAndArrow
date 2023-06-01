@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         scoreCs.SetTotalArrows(totalArrows);
         scoreCs.SetTotalArrows(totalArrows);
         scoreCs.SetTotalPoints(totalPoints);
+        scoreCs.SetTargetHitLight(-1);
     }
 
 
@@ -75,10 +76,24 @@ public class GameManager : MonoBehaviour
 
         totalPoints += points;
 
+        if( points == 0)
+        {
+            scoreCs.SetTargetHitLight(0);
+        }
+        // else 
+        // {
+        //     scoreCs.TargetHitLight(true);
+        // }
+
         scoreCs.SetLastArrowPoints(points);
         scoreCs.SetTotalPoints(totalPoints);
 
         Debug.Log("totalPoints " + totalPoints);
+    }
+
+    public void ShowTargetColor(int newColor)
+    {
+        scoreCs.SetTargetHitLight(newColor);
     }
 
     // UI Button recuperar arco

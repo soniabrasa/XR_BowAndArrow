@@ -41,10 +41,13 @@ public class Target : MonoBehaviour, IArrowHittable
         {
             //Marcamos o impacto en vermello
             GameManager.instance.RegisterMarker(Instantiate(redHitMarkerPrefab, hit.point, Quaternion.LookRotation(transform.right)));
+
+            GameManager.instance.ShowTargetColor(2);
         }
         else
         {
             GameManager.instance.RegisterMarker(Instantiate(yellowHitMarkerPrefab, hit.point, Quaternion.LookRotation(transform.right)));
+            GameManager.instance.ShowTargetColor(1);
         }
 
         Debug.Log($"Target {points} points");
