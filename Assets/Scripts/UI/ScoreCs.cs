@@ -33,14 +33,4 @@ public class ScoreCs : MonoBehaviour
     {
         GameManager.instance.RetrieveBow();
     }
-
-
-    void Start()
-    {
-    }
-
-
-    void Update()
-    {
-    }
 }
